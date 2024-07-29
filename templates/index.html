@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'">
+    <link href="/static/styles.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Implant Finder - Identify Implants</title>
+</head>
+<body>
+    <header>
+        <img src="/static/menu.png" class="menu-icon">
+        <img src="/static/th%20(9).jpg" alt="Implant Finder Logo" class="logo">
+        <h1 id="hehe">Implant Finder</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="/"><img src="/static/home.png" class="home-icon"></a></li>
+            <li><a href="sign_in.html"><img src="/static/logout.png" class="home-icon"></a></li>
+        </ul>
+    </nav>
+    <main>
+        <section class="form-section">
+            <h2>Implants Identification</h2>
+            <div class="input-container">
+                <label for="patient-id" class="input-label">Patient ID</label>
+                <input type="text" id="patient-id" class="input-field">
+            </div>
+            <div class="input-container">
+                <label for="xray-upload" class="input-label">Select X-ray Image</label>
+                <input type="file" id="xray-upload" class="input-field">
+            </div>
+            <button type="button" id="find-btn">Predict</button>
+        </section>
+        <section class="result-section">
+            <div id="result-box" class="result-box">
+                <h2>Result</h2>
+                <!-- Image preview and result will be dynamically loaded here -->
+            </div>
+        </section>
+    </main>
+    <script src="/static/renderer.js"></script>
+</body>
+</html>
+

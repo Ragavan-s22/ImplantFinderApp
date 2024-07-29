@@ -1,0 +1,16 @@
+{
+  "name": "torpid-observation-clap-qyfst",
+  "productName": "torpid-observation-clap-qyfst",
+  "description": "My Electron application description",
+  "keywords": [],
+  "main": "./main.js",
+  "version": "1.0.0",
+  "author": "Rajalakshmi",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "electron": "30.0.2"
+  }
+}
