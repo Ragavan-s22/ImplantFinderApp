@@ -5,7 +5,7 @@ import numpy as np
 import os
 
 app = Flask(__name__)
-model = load_model("E:/Ragav/Intern/Implantdetection/cnn_model.keras")
+model = load_model("cnn_model.keras")
 
 UPLOAD_FOLDER = './uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER

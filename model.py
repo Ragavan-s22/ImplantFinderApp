@@ -9,12 +9,12 @@ import numpy as np
 train = ImageDataGenerator(rescale=1/255)
 validation = ImageDataGenerator(rescale=1/255)
 
-train_dataset = train.flow_from_directory("E:/Ragav/Intern/Implantdetection/computer-vision/basedata/training/",
+train_dataset = train.flow_from_directory("/basedata/training/",
                                           target_size=(200,200),
                                           batch_size=3,
                                           class_mode='binary')
 
-validation_dataset = validation.flow_from_directory("E:/Ragav/Intern/Implantdetection/computer-vision/basedata/validation/",
+validation_dataset = validation.flow_from_directory("/basedata/validation/",
                                                     target_size=(200,200),
                                                     batch_size=3,
                                                     class_mode='binary')
@@ -44,6 +44,6 @@ model_fit = model.fit(train_dataset,
                       validation_data=validation_dataset)
 
 # Save the model
-model_save_path = "E:/Ragav/Intern/Implantdetection/cnn_model.keras"
+model_save_path = "cnn_model.keras"
 model.save(model_save_path)
 print(f"Model saved to {model_save_path}")
