@@ -1,54 +1,50 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const fileInput = document.getElementById('xray-upload');
-    const resultBox = document.getElementById('result-box');
-    const predictButton = document.getElementById('find-btn');
-    let imgPreview = document.createElement('img');
-    imgPreview.id = 'img-preview';
-    imgPreview.style.display = 'none';
-    resultBox.appendChild(imgPreview);
+    const form = document.getElementById('upload-form');
+    const resultBox = document.getElementById('prediction-result');
 
-    fileInput.addEventListener('change', (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                imgPreview.src = e.target.result;
-                imgPreview.style.display = 'block';
-            }
-            reader.readAsDataURL(file);
-        } else {
-            imgPreview.style.display = 'none';
-        }
-    });
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
 
-    predictButton.addEventListener('click', () => {
-        const file = fileInput.files[0];
-        const patientId = document.getElementById('patient-id').value;
-        if (file) {
-            const formData = new FormData();
-            formData.append('file', file);
+        const formData = new FormData(form);
+        const patientId = formData.get('patient-id');
 
-            fetch('/upload', {
+        try {
+            const response = await fetch('/', {
                 method: 'POST',
                 body: formData
-            })
-            .then(response => response.text())
-            .then(result => {
-                const resultHTML = `
-                    <h3>Patient ID: ${patientId}</h3>
-                    <h3>Implant Type: ${result}</h3>
-                `;
-                resultBox.innerHTML = `<h2>Result</h2>${resultHTML}`;
-                resultBox.appendChild(imgPreview);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                resultBox.innerHTML = `<h2>Result</h2><h3>Error processing the image</h3>`;
-                resultBox.appendChild(imgPreview);
             });
-        } else {
-            alert('Please select a file.');
+
+            if (response.ok) {
+                const result = await response.json();
+                displayResult(result, patientId);
+            } else {
+                resultBox.innerHTML = `<p>Error: ${response.statusText}</p>`;
+            }
+        } catch (error) {
+            resultBox.innerHTML = `<p>Error: ${error.message}</p>`;
         }
     });
+
+    function displayResult(result, patientId) {
+        const { filename, predicted_class } = result;
+        resultBox.innerHTML = `
+            <div style="display: flex; align-items: flex-start;">
+                <img src="/static/uploads/${filename}" alt="Uploaded Image" class="result-image" style="width: 150px; height: 150px; margin-right: 10px;">
+                <div class="details-container" >
+                    <h3>Patient ID: ${patientId}</h3>
+                    <h3>Predicted Class: ${predicted_class}</h3>
+                </div>
+            </div>
+        `;
+    }
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+    var menuButton = document.getElementById('menu-button');
+    var sidebar = document.getElementById('sidebar');
+
+    menuButton.addEventListener('click', function() {
+        // Toggle the 'active' class on the sidebar
+        sidebar.classList.toggle('active');
+    });
+});

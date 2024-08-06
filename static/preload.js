@@ -1,27 +1,15 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const predictButton = document.getElementById('find-btn');
-    predictButton.addEventListener('click', () => {
-        const fileInput = document.getElementById('xray-upload');
-        const file = fileInput.files[0];
+document.getElementById('upload-form').addEventListener('submit', async function(event) {
+    event.preventDefault();
 
-        if (file) {
-            const formData = new FormData();
-            formData.append('file', file);
+    const formData = new FormData();
+    const fileInput = document.getElementById('xray-upload');
+    formData.append('file', fileInput.files[0]);
 
-            fetch('/upload', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.text())
-            .then(result => {
-                document.getElementById('result-box').innerHTML = `<h2>Result: ${result}</h2>`;
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                document.getElementById('result-box').innerHTML = '<h2>Error processing the image</h2>';
-            });
-        } else {
-            alert('Please select a file.');
-        }
+    const response = await fetch('/', {
+        method: 'POST',
+        body: formData
     });
+
+    const result = await response.json();
+    document.getElementById('prediction-result').textContent = `The image is predicted to be: ${result.prediction}`;
 });
